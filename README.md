@@ -1,3 +1,7 @@
+
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![Flask](https://img.shields.io/badge/Flask-WebApp-green)
+![ML](https://img.shields.io/badge/Machine%20Learning-Model-orange)
 # 🐾 Animal Symptoms Analyzer
 
 A Machine Learning-based web application that analyzes animal symptoms and predicts possible health conditions along with dynamic and realistic care recommendations.
