@@ -1,0 +1,59 @@
+{
+  "Mastitis": {
+    "default": {
+      "do": ["Keep udder clean", "Isolate infected animal"],
+      "dont": ["Avoid milking infected udder repeatedly"],
+      "medicine": "Veterinary antibiotics"
+    },
+    "rules": {
+      "fever": {
+        "do": ["Provide cool environment", "Ensure hydration"],
+        "note": ["Fever indicates severe infection"]
+      },
+      "pain": {
+        "do": ["Handle udder gently"],
+        "dont": ["Avoid rough handling"]
+      },
+      "udder swelling": {
+        "do": ["Apply cold compress"],
+        "dont": ["Do not apply pressure"]
+      }
+    }
+  },
+
+  "Fungal Infection": {
+    "default": {
+      "do": ["Keep skin dry", "Maintain hygiene"],
+      "dont": ["Avoid moisture exposure"],
+      "medicine": "Antifungal cream"
+    },
+    "rules": {
+      "itching": {
+        "do": ["Use medicated shampoo"],
+        "note": ["Itching indicates skin irritation"]
+      },
+      "skin lesions": {
+        "do": ["Clean affected area daily"],
+        "dont": ["Avoid scratching"]
+      }
+    }
+  },
+
+  "Parvovirus": {
+    "default": {
+      "do": ["Isolate immediately", "Maintain hydration"],
+      "dont": ["Avoid contact with other animals"],
+      "medicine": "Emergency vet care"
+    },
+    "rules": {
+      "vomiting": {
+        "do": ["Give electrolyte solution"],
+        "note": ["High dehydration risk"]
+      },
+      "diarrhea": {
+        "do": ["Monitor stool condition"],
+        "dont": ["Avoid solid food initially"]
+      }
+    }
+  }
+}

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Animal Symptoms Analyzer</title>
+
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    margin: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+h1 {
+    text-align: center;
+}
+
+.symptoms {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.symptoms label {
+    background: #f1f1f1;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+button {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(45deg, #00c6ff, #0072ff);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.card {
+    background: #f9f9f9;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 10px;
+}
+
+.bar {
+    background: #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.fill {
+    height: 10px;
+    background: #0072ff;
+}
+
+.recommend {
+    background: #e8f5e9;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🐾 Animal Symptoms Analyzer</h1>
+<p style="text-align:center; color:gray;">
+Analyze symptoms to get possible conditions and care suggestions
+</p>
+
+<h3>Select Observed Symptoms</h3>
+
+<div class="symptoms">
+<label><input type="checkbox" value="fever"> Fever</label>
+<label><input type="checkbox" value="vomiting"> Vomiting</label>
+<label><input type="checkbox" value="swelling"> Swelling</label>
+<label><input type="checkbox" value="coughing"> Coughing</label>
+<label><input type="checkbox" value="itching"> Itching</label>
+<label><input type="checkbox" value="skin lesions"> Skin Lesions</label>
+<label><input type="checkbox" value="diarrhea"> Diarrhea</label>
+<label><input type="checkbox" value="pain"> Pain</label>
+<label><input type="checkbox" value="weight loss"> Weight Loss</label>
+<label><input type="checkbox" value="lethargy"> Lethargy</label>
+<label><input type="checkbox" value="udder swelling"> Udder Swelling</label>
+</div>
+
+<button onclick="predict()">Analyze</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+async function predict() {
+
+    let selected = [];
+    document.querySelectorAll('input:checked')
+        .forEach(el => selected.push(el.value));
+
+    if (selected.length === 0) {
+        alert("Select symptoms first!");
+        return;
+    }
+
+    let res = await fetch("/predict", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({symptoms: selected})
+    });
+
+    let data = await res.json();
+
+    let output = "<h3>Predictions</h3>";
+
+    data.predictions.forEach(p => {
+        let percent = (p.confidence * 100).toFixed(2);
+
+        output += `
+        <div class="card">
+            <b>${p.disease}</b> - ${percent}%
+            <div class="bar">
+                <div class="fill" style="width:${percent}%"></div>
+            </div>
+        </div>
+        `;
+    });
+
+    let r = data.recommendation;
+
+    output += `
+    <div class="recommend">
+        <h3>💊 Recommended Actions</h3>
+        <p><b>Do:</b> ${r.do.join(", ")}</p>
+        <p><b>Don't:</b> ${r.dont.join(", ")}</p>
+        <p><b>Medicine:</b> ${r.medicine}</p>
+    `;
+
+    if (r.notes.length > 0) {
+        output += `<p><b>Note:</b> ${r.notes.join(", ")}</p>`;
+    }
+
+    output += `</div>`;
+
+    document.getElementById("result").innerHTML = output;
+}
+</script>
+
+</body>
+</html>
