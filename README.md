@@ -32,7 +32,6 @@ A Machine Learning-based web application that analyzes animal symptoms and predi
 <img width="1562" height="662" alt="screenshot3" src="https://github.com/user-attachments/assets/f180775a-d4d5-4fc3-9893-28ccab5ed241" />
 
 
-
 ---
 
 ## ▶️ How to Run
